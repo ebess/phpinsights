@@ -21,6 +21,13 @@ final class SyntaxCheck extends Insight implements HasDetails, GlobalInsight
     /** @var array<Details> */
     private array $details = [];
 
+    /**
+     * The timeout for linting process in seconds
+     *
+     * @var int
+     */
+    public int $timeout = 60;
+
     public function getTitle(): string
     {
         return 'Syntax Check';
@@ -46,7 +53,7 @@ final class SyntaxCheck extends Insight implements HasDetails, GlobalInsight
             implode(' ', $this->getShellExcludeArgs()),
             $toAnalyse
         );
-        $process = Process::fromShellCommandline($cmdLine);
+        $process = Process::fromShellCommandline($cmdLine, null, null, null, 600);
 
         if ($toAnalyse === '.' && getcwd() !== rtrim($this->collector->getCommonPath(), DIRECTORY_SEPARATOR)) {
             $process->setWorkingDirectory($this->collector->getCommonPath());
