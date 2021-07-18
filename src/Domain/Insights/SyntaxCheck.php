@@ -53,7 +53,7 @@ final class SyntaxCheck extends Insight implements HasDetails, GlobalInsight
             implode(' ', $this->getShellExcludeArgs()),
             $toAnalyse
         );
-        $process = Process::fromShellCommandline($cmdLine, null, null, null, 600);
+        $process = Process::fromShellCommandline($cmdLine, null, null, null, $this->timeout);
 
         if ($toAnalyse === '.' && getcwd() !== rtrim($this->collector->getCommonPath(), DIRECTORY_SEPARATOR)) {
             $process->setWorkingDirectory($this->collector->getCommonPath());
